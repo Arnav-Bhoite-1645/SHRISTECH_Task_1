@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Zap, 
   CheckCircle, 
@@ -17,9 +18,11 @@ import {
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [view, setView] = useState('home'); // 'home' or 'about'
+  const [view, setView] = useState('about'); // 'home' or 'about'
   const [formData, setFormData] = useState({ name: '', email: '' });
   const [formStatus, setFormStatus] = useState('idle');
+  const [contactFormData, setContactFormData] = useState({ name: '', email: '', message: '' });
+  const [contactFormStatus, setContactFormStatus] = useState('idle');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,8 +46,22 @@ const App = () => {
     }, 1500);
   };
 
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    setContactFormStatus('loading');
+    setTimeout(() => {
+      setContactFormStatus('success');
+      setContactFormData({ name: '', email: '', message: '' });
+    }, 1500);
+  };
+
   const navigateTo = (newView) => {
     setView(newView);
+    setIsMenuOpen(false);
+  };
+
+  const scrollToContact = () => {
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
   };
 
@@ -637,6 +654,7 @@ const App = () => {
             <button onClick={() => navigateTo('home')} className="nav-link">Features</button>
             <button onClick={() => navigateTo('about')} className="nav-link">About Us</button>
             <button onClick={() => navigateTo('home')} className="nav-link">Pricing</button>
+            <button onClick={scrollToContact} className="nav-link">Contact</button>
             <button onClick={() => navigateTo('home')} className="btn-primary">Get Started</button>
           </div>
 
@@ -653,6 +671,7 @@ const App = () => {
             <button onClick={() => navigateTo('home')} className="nav-link" style={{display:'block', padding:'1rem 0', width:'100%', textAlign:'left'}}>Features</button>
             <button onClick={() => navigateTo('about')} className="nav-link" style={{display:'block', padding:'1rem 0', width:'100%', textAlign:'left'}}>About Us</button>
             <button onClick={() => navigateTo('home')} className="nav-link" style={{display:'block', padding:'1rem 0', width:'100%', textAlign:'left'}}>Pricing</button>
+            <button onClick={scrollToContact} className="nav-link" style={{display:'block', padding:'1rem 0', width:'100%', textAlign:'left'}}>Contact</button>
             <button onClick={() => navigateTo('home')} className="btn-primary" style={{display:'block', textAlign:'center', marginTop:'1rem'}}>Register Now</button>
           </div>
         )}
@@ -823,7 +842,7 @@ const App = () => {
                         {formStatus === 'loading' ? 'Setting up...' : 'Create My Account'}
                       </button>
                       <p style={{textAlign:'center', fontSize:'0.75rem', color:'var(--slate-400)', marginTop:'1rem'}}>
-                        By registering, you agree to our <a href="#" style={{color:'inherit'}}>Terms</a> and <a href="#" style={{color:'inherit'}}>Privacy Policy</a>.
+                        By registering, you agree to our <Link to="/terms" style={{color:'inherit'}}>Terms</Link> and <Link to="/privacy" style={{color:'inherit'}}>Privacy Policy</Link>.
                       </p>
                     </form>
                   )}
@@ -868,11 +887,66 @@ const App = () => {
                     <li><CheckCircle size={18} color="var(--primary)" /> <strong>Integrity:</strong> We maintain the highest ethical standards</li>
                   </ul>
 
-                  <h2>Contact Us</h2>
+                  <h2 id="contact">Contact Us</h2>
                   <p>
                     Have questions or want to work with us? We'd love to hear from you.
-                    Reach out to us through our contact form or social media channels.
+                    Send us a message and we'll get back to you as soon as possible.
                   </p>
+
+                  {contactFormStatus === 'success' ? (
+                    <div style={{textAlign:'center', padding:'2rem 0', background:'var(--emerald-100)', borderRadius:'0.5rem', marginTop:'1rem'}}>
+                      <div style={{width:'60px', height:'60px', background:'var(--emerald-600)', borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 1rem'}}>
+                        <CheckCircle color="white" size={30} />
+                      </div>
+                      <h3 style={{fontSize:'1.25rem', fontWeight:'700', marginBottom:'0.5rem', color:'var(--emerald-600)'}}>Message Sent!</h3>
+                      <p style={{color:'var(--slate-600)'}}>We'll get back to you within 24 hours.</p>
+                      <button onClick={() => setContactFormStatus('idle')} style={{background:'none', border:'none', color:'var(--emerald-600)', fontWeight:'700', marginTop:'1rem', cursor:'pointer'}}>Send another message</button>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleContactSubmit} style={{marginTop:'1rem'}}>
+                      <div className="form-group" style={{marginBottom:'1rem'}}>
+                        <label className="form-label">Name</label>
+                        <input 
+                          type="text" 
+                          required
+                          placeholder="Your full name"
+                          className="form-input"
+                          value={contactFormData.name}
+                          onChange={(e) => setContactFormData({...contactFormData, name: e.target.value})}
+                        />
+                      </div>
+                      <div className="form-group" style={{marginBottom:'1rem'}}>
+                        <label className="form-label">Email</label>
+                        <input 
+                          type="email" 
+                          required
+                          placeholder="your@email.com"
+                          className="form-input"
+                          value={contactFormData.email}
+                          onChange={(e) => setContactFormData({...contactFormData, email: e.target.value})}
+                        />
+                      </div>
+                      <div className="form-group" style={{marginBottom:'1.5rem'}}>
+                        <label className="form-label">Message</label>
+                        <textarea 
+                          required
+                          placeholder="Tell us how we can help..."
+                          className="form-input"
+                          rows="4"
+                          style={{resize:'vertical', minHeight:'100px'}}
+                          value={contactFormData.message}
+                          onChange={(e) => setContactFormData({...contactFormData, message: e.target.value})}
+                        />
+                      </div>
+                      <button 
+                        className="btn-primary" 
+                        style={{width:'100%', padding:'1rem', fontSize:'1rem'}}
+                        disabled={contactFormStatus === 'loading'}
+                      >
+                        {contactFormStatus === 'loading' ? 'Sending...' : 'Send Message'}
+                      </button>
+                    </form>
+                  )}
                 </div>
               </div>
 
@@ -928,8 +1002,8 @@ const App = () => {
           <div style={{paddingTop:'2rem', borderTop:'1px solid var(--slate-100)', display:'flex', justifyContent:'space-between', alignItems:'center', fontSize:'0.875rem', color:'var(--slate-400)'}}>
             <p>© 2024 SparkFlow Technologies. All rights reserved.</p>
             <div style={{display:'flex', gap:'2rem'}}>
-              <span>Privacy</span>
-              <span>Terms & Conditions</span>
+              <Link to="/privacy" style={{color: 'inherit', textDecoration: 'none'}}>Privacy</Link>
+              <Link to="/terms" style={{color: 'inherit', textDecoration: 'none'}}>Terms</Link>
             </div>
           </div>
         </div>

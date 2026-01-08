@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import About from './About.jsx';
 import Pricing from './components/Pricing.jsx';
+import Privacy from './components/Privacy.jsx';
+import Terms from './components/Terms.jsx';
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -726,7 +728,7 @@ const App = () => {
                     {formStatus === 'loading' ? 'Setting up...' : 'Create My Account'}
                   </button>
                   <p style={{textAlign:'center', fontSize:'0.75rem', color:'var(--slate-400)', marginTop:'1rem'}}>
-                    By registering, you agree to our <a href="#" style={{color:'inherit'}}>Terms</a> and <a href="#" style={{color:'inherit'}}>Privacy Policy</a>.
+                    By registering, you agree to our <Link to="/terms" style={{color:'inherit'}}>Terms</Link> and <Link to="/privacy" style={{color:'inherit'}}>Privacy Policy</Link>.
                   </p>
                 </form>
               )}
@@ -773,8 +775,8 @@ const App = () => {
           <div style={{paddingTop:'2rem', borderTop:'1px solid var(--slate-100)', display:'flex', justifyContent:'space-between', alignItems:'center', fontSize:'0.875rem', color:'var(--slate-400)'}}>
             <p>© 2024 SparkFlow Technologies. All rights reserved.</p>
             <div style={{display:'flex', gap:'2rem'}}>
-              <span>Privacy</span>
-              <span>Terms</span>
+              <Link to="/privacy" style={{color: 'inherit', textDecoration: 'none'}}>Privacy</Link>
+              <Link to="/terms" style={{color: 'inherit', textDecoration: 'none'}}>Terms</Link>
             </div>
           </div>
         </div>
@@ -782,6 +784,8 @@ const App = () => {
     </div>
       } />
       <Route path="/about" element={<About />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
     </Routes>
   );
 };
