@@ -2,6 +2,13 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 
 const Hero = () => {
+  const handleScrollTo = (elementId) => {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <style>{`
@@ -196,12 +203,20 @@ const Hero = () => {
           </p>
 
           <div className="hero-actions">
-            <a href="#register" className="btn-primary btn-hero-primary">
+            <button 
+              onClick={() => handleScrollTo('register')}
+              className="btn-primary btn-hero-primary"
+              style={{border: 'none', cursor: 'pointer'}}
+            >
               Get Started for Free <ArrowRight size={20} />
-            </a>
-            <a href="#features" className="btn-hero-outline">
+            </button>
+            <button 
+              onClick={() => handleScrollTo('features')}
+              className="btn-hero-outline"
+              style={{border: '1px solid var(--slate-200)', cursor: 'pointer'}}
+            >
               Explore Features
-            </a>
+            </button>
           </div>
 
           <div className="social-proof">

@@ -2,6 +2,13 @@ import React from 'react';
 import { Check, Star } from 'lucide-react';
 
 const Pricing = () => {
+  const handleScrollTo = (elementId) => {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const plans = [
     {
       name: 'Starter',
@@ -161,7 +168,9 @@ const Pricing = () => {
                 ))}
               </ul>
 
-              <button style={{
+              <button 
+                onClick={() => handleScrollTo('register')}
+                style={{
                 width: '100%',
                 padding: '1rem 2rem',
                 background: plan.popular ? 'var(--primary)' : 'white',
@@ -206,14 +215,19 @@ const Pricing = () => {
           }}>
             Need a custom solution?
           </p>
-          <a href="#register" style={{
+          <button 
+            onClick={() => handleScrollTo('register')}
+            style={{
             color: 'var(--primary)',
             fontWeight: '600',
             textDecoration: 'none',
-            fontSize: '1.125rem'
+            fontSize: '1.125rem',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer'
           }}>
             Contact our sales team →
-          </a>
+          </button>
         </div>
       </div>
     </section>

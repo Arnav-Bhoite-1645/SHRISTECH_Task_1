@@ -92,7 +92,12 @@ const Register = ({ formData, setFormData, formStatus, setFormStatus, handleRegi
               
               <div style={{paddingTop:'2rem', borderTop:'1px solid var(--slate-50)'}}>
                 <p style={{fontSize:'0.875rem', color:'var(--slate-400)', fontWeight:'500'}}>Need a custom plan?</p>
-                <a href="#" style={{color:'var(--primary)', fontWeight:'700', textDecoration:'none'}}>Contact Sales</a>
+                <button 
+                  onClick={() => alert('Sales team will contact you soon!')}
+                  style={{color:'var(--primary)', fontWeight:'700', textDecoration:'none', background:'none', border:'none', cursor:'pointer', fontSize:'1rem'}}
+                >
+                  Contact Sales
+                </button>
               </div>
             </div>
 

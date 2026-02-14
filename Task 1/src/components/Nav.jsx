@@ -101,19 +101,21 @@ const Nav = ({ isMenuOpen, setIsMenuOpen, isScrolled }) => {
 
       <nav className={isScrolled ? 'scrolled' : ''}>
         <div className="container nav-content">
-          <div className="logo-area">
-            <div className="logo-icon">
-              <Zap className="text-white" size={24} />
+          <Link to="/" style={{textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer'}}>
+            <div className="logo-area">
+              <div className="logo-icon">
+                <Zap className="text-white" size={24} />
+              </div>
+              <span className="logo-text">SparkFlow</span>
             </div>
-            <span className="logo-text">SparkFlow</span>
-          </div>
+          </Link>
 
           <div className="nav-links">
-            <a href="#features" className="nav-link">Features</a>
-            <a href="#how-it-works" className="nav-link">How it Works</a>
-            <a href="#pricing" className="nav-link">Pricing</a>
+            <a href="#features" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({behavior: 'smooth'}); }}>Features</a>
+            <a href="#how-it-works" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById('how-it-works')?.scrollIntoView({behavior: 'smooth'}); }}>How it Works</a>
+            <a href="#pricing" className="nav-link" onClick={(e) => { e.preventDefault(); document.getElementById('pricing')?.scrollIntoView({behavior: 'smooth'}); }}>Pricing</a>
             <Link to="/about" className="nav-link">About Us</Link>
-            <a href="#register" className="btn-primary">Get Started</a>
+            <a href="#register" className="btn-primary" onClick={(e) => { e.preventDefault(); document.getElementById('register')?.scrollIntoView({behavior: 'smooth'}); }}>Get Started</a>
           </div>
 
           <button 
@@ -126,11 +128,11 @@ const Nav = ({ isMenuOpen, setIsMenuOpen, isScrolled }) => {
 
         {isMenuOpen && (
           <div className="mobile-menu">
-            <a href="#features" className="nav-link" style={{display:'block', padding:'1rem 0'}} onClick={() => setIsMenuOpen(false)}>Features</a>
-            <a href="#how-it-works" className="nav-link" style={{display:'block', padding:'1rem 0'}} onClick={() => setIsMenuOpen(false)}>How it Works</a>
-            <a href="#pricing" className="nav-link" style={{display:'block', padding:'1rem 0'}} onClick={() => setIsMenuOpen(false)}>Pricing</a>
+            <a href="#features" className="nav-link" style={{display:'block', padding:'1rem 0'}} onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); document.getElementById('features')?.scrollIntoView({behavior: 'smooth'}); }}>Features</a>
+            <a href="#how-it-works" className="nav-link" style={{display:'block', padding:'1rem 0'}} onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); document.getElementById('how-it-works')?.scrollIntoView({behavior: 'smooth'}); }}>How it Works</a>
+            <a href="#pricing" className="nav-link" style={{display:'block', padding:'1rem 0'}} onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); document.getElementById('pricing')?.scrollIntoView({behavior: 'smooth'}); }}>Pricing</a>
             <Link to="/about" className="nav-link" style={{display:'block', padding:'1rem 0'}} onClick={() => setIsMenuOpen(false)}>About Us</Link>
-            <a href="#register" className="btn-primary" style={{display:'block', textAlign:'center', marginTop:'1rem'}} onClick={() => setIsMenuOpen(false)}>Register Now</a>
+            <a href="#register" className="btn-primary" style={{display:'block', textAlign:'center', marginTop:'1rem'}} onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); document.getElementById('register')?.scrollIntoView({behavior: 'smooth'}); }}>Get Started</a>
           </div>
         )}
       </nav>
